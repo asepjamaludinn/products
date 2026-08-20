@@ -122,6 +122,13 @@ npm start
 | `PUT`    | `/api/products/:id` | Update a product  |
 | `DELETE` | `/api/products/:id` | Delete a product  |
 
+## API Documentation
+
+API telah didokumentasikan dan diuji menggunakan Postman.
+
+**Postman Documentation:**  
+[View Products API Documentation on Postman](https://documenter.getpostman.com/view/39954677/2sBYArUCgp)
+
 ## API Usage
 
 ### Get All Products
