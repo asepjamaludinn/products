@@ -15,11 +15,12 @@ import {
   createProductSchema,
   updateProductSchema,
   productIdSchema,
+  listProductsQuerySchema,
 } from "../schemas/product.schema.js";
 
 const router = express.Router();
 
-router.get("/", getProducts);
+router.get("/", validate(listProductsQuerySchema, "query"), getProducts);
 
 router.get("/:id", validate(productIdSchema, "params"), getProductById);
 

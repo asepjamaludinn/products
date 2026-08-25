@@ -1,7 +1,20 @@
 import * as productRepository from "../repositories/product.repository.js";
 
-export const getProducts = async () => {
-  return productRepository.findAll();
+export const getProducts = async ({ page, limit, categoryId }) => {
+  const [products, total] = await Promise.all([
+    productRepository.findAll({ page, limit, categoryId }),
+    productRepository.count({ categoryId }),
+  ]);
+
+  return {
+    products,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
 };
 
 export const getProductById = async (id) => {

@@ -3,6 +3,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
 import productRoutes from "./routes/product.route.js";
+import categoryRoutes from "./routes/category.route.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/products", writeLimiter, productRoutes);
+app.use("/api/categories", writeLimiter, categoryRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Route not found");

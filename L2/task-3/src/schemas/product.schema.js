@@ -21,6 +21,11 @@ export const createProductSchema = z
       .int("Stock must be an integer")
       .nonnegative("Stock cannot be negative")
       .max(POSTGRES_INT_MAX, "Stock is too large"),
+
+    categoryId: z
+      .number()
+      .int("Category ID must be an integer")
+      .positive("Category ID must be greater than 0"),
   })
   .strict("Unexpected field(s) in request body");
 
@@ -35,3 +40,11 @@ export const productIdSchema = z
       .max(POSTGRES_INT_MAX, "Product ID is too large"),
   })
   .strict("Unexpected field(s) in request params");
+
+export const listProductsQuerySchema = z
+  .object({
+    page: z.coerce.number().int().positive().default(1),
+    limit: z.coerce.number().int().positive().max(100).default(10),
+    categoryId: z.coerce.number().int().positive().optional(),
+  })
+  .strict("Unexpected query parameter(s)");

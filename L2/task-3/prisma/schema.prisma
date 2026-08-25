@@ -12,6 +12,15 @@ datasource db {
   provider = "postgresql"
 }
 
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products Product[]
+}
+
 model Product {
   id        Int      @id @default(autoincrement())
   name      String   @unique
@@ -19,4 +28,10 @@ model Product {
   stock     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  @@index([categoryId])
+  @@index([createdAt])
 }

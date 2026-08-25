@@ -21,6 +21,11 @@ export const errorHandler = (err, req, res, next) => {
       message = `A product with this ${target} already exists`;
       break;
     }
+    case "P2003": {
+      statusCode = 400;
+      message = "Referenced category does not exist or is still in use";
+      break;
+    }
     default:
       break;
   }

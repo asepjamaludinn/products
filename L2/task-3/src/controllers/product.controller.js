@@ -1,11 +1,13 @@
 import * as productService from "../services/product.service.js";
 
 export const getProducts = async (req, res) => {
-  const products = await productService.getProducts();
+  const { page, limit, categoryId } = req.query;
+  const result = await productService.getProducts({ page, limit, categoryId });
 
   res.status(200).json({
     success: true,
-    data: products,
+    data: result.products,
+    pagination: result.pagination,
   });
 };
 

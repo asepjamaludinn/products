@@ -1,11 +1,27 @@
 import { prisma } from "../config/database.js";
 
-export const findAll = () => {
+export const findAll = ({ page, limit, categoryId }) => {
+  const where = categoryId ? { categoryId } : undefined;
+
   return prisma.product.findMany({
+    where,
     orderBy: {
       id: "asc",
     },
+    skip: (page - 1) * limit,
+    take: limit,
+    include: {
+      category: {
+        select: { id: true, name: true },
+      },
+    },
   });
+};
+
+export const count = ({ categoryId }) => {
+  const where = categoryId ? { categoryId } : undefined;
+
+  return prisma.product.count({ where });
 };
 
 export const findById = (id) => {
@@ -13,12 +29,22 @@ export const findById = (id) => {
     where: {
       id,
     },
+    include: {
+      category: {
+        select: { id: true, name: true },
+      },
+    },
   });
 };
 
 export const create = (productData) => {
   return prisma.product.create({
     data: productData,
+    include: {
+      category: {
+        select: { id: true, name: true },
+      },
+    },
   });
 };
 
@@ -28,6 +54,11 @@ export const update = (id, productData) => {
       id,
     },
     data: productData,
+    include: {
+      category: {
+        select: { id: true, name: true },
+      },
+    },
   });
 };
 
