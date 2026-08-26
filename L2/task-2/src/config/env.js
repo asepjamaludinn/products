@@ -14,6 +14,7 @@ const envSchema = z.object({
     .string({ required_error: "JWT_SECRET is required" })
     .min(32, "JWT_SECRET must be at least 32 characters"),
   JWT_EXPIRES_IN_SECONDS: z.coerce.number().int().positive().default(86400),
+  FRONTEND_URL: z.string().url().default("http://localhost:3001"),
 });
 
 const parsed = envSchema.safeParse(process.env);
@@ -31,4 +32,5 @@ export const env = {
   databaseUrl: parsed.data.DATABASE_URL,
   jwtSecret: parsed.data.JWT_SECRET,
   jwtExpiresInSeconds: parsed.data.JWT_EXPIRES_IN_SECONDS,
+  frontendUrl: parsed.data.FRONTEND_URL,
 };

@@ -1,7 +1,8 @@
 import express from "express";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
-
+import cors from "cors";
+import { env } from "./config/env.js";
 import productRoutes from "./routes/product.route.js";
 import categoryRoutes from "./routes/category.route.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
@@ -9,7 +10,7 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 const app = express();
 
 app.set("trust proxy", 1);
-
+app.use(cors({ origin: env.frontendUrl, credentials: true }));
 app.use(helmet());
 app.use(express.json({ limit: "100kb" }));
 

@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #0f172a;
+  --font-sans: "Inter", sans-serif;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900;
+}

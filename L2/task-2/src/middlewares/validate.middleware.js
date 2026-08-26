@@ -15,7 +15,12 @@ export const validate = (schema, source = "body") => {
       return next(error);
     }
 
-    req[source] = result.data;
+    Object.defineProperty(req, source, {
+      value: result.data,
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    });
 
     next();
   };

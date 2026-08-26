@@ -13,6 +13,7 @@ const envSchema = z.object({
   API_KEY: z
     .string({ required_error: "API_KEY is required" })
     .min(16, "API_KEY must be at least 16 characters"),
+  FRONTEND_URL: z.string().url().default("http://localhost:3001"),
 });
 
 const parsed = envSchema.safeParse(process.env);
@@ -29,4 +30,5 @@ export const env = {
   isProduction: parsed.data.NODE_ENV === "production",
   databaseUrl: parsed.data.DATABASE_URL,
   apiKey: parsed.data.API_KEY,
+  frontendUrl: parsed.data.FRONTEND_URL,
 };
