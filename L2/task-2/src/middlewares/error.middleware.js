@@ -1,7 +1,6 @@
 import { env } from "../config/env.js";
 
 export const errorHandler = (err, req, res, next) => {
-  // Hanya cetak log ke terminal jika itu adalah Internal Server Error (500) atau error tidak terduga
   if (!err.statusCode || err.statusCode === 500) {
     console.error(err);
   }

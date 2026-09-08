@@ -23,7 +23,7 @@ export default function CheckoutPage() {
   const handlePlaceOrder = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulasi API delay
+
     setTimeout(() => {
       clearCart();
       toast.success("Order placed successfully! We'll process it soon.");

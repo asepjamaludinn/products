@@ -43,7 +43,6 @@ export const useProducts = ({
 
   useEffect(() => {
     fetchProducts(initialPage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchProducts, initialPage, categoryId, search]);
 
   const removeProduct = async (id) => {

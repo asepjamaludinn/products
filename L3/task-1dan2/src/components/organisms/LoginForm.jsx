@@ -45,7 +45,6 @@ export const LoginForm = () => {
       const user = await login(result.data);
       toast.success(`Welcome back, ${user.name.split(" ")[0]}`);
 
-      // Arahkan ke admin panel jika role ADMIN, atau ke /shop untuk user biasa
       if (user.role === "ADMIN") {
         router.replace("/admin/products");
       } else {

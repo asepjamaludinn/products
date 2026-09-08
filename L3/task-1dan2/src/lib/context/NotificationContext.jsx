@@ -45,7 +45,6 @@ export const NotificationProvider = ({ children }) => {
     fetchInitial();
   }, [user, fetchInitial]);
 
-  // Bagian real-time: cukup prepend item baru ke state lokal (bukan refetch)
   useEffect(() => {
     if (!socket) return;
 

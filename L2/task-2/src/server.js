@@ -1,6 +1,9 @@
+import http from "http";
 import app from "./app.js";
 import { env } from "./config/env.js";
 import { prisma } from "./config/database.js";
+import { initSocket } from "./config/socket.js";
+import { registerSocketServer } from "./sockets/index.js";
 
 const SHUTDOWN_TIMEOUT_MS = 10_000;
 
@@ -11,7 +14,11 @@ const startServer = async () => {
   try {
     await prisma.$connect();
 
-    server = app.listen(env.port, () => {
+    const httpServer = http.createServer(app);
+    const io = initSocket(httpServer);
+    registerSocketServer(io);
+
+    server = httpServer.listen(env.port, () => {
       console.log(`Server running at http://localhost:${env.port}`);
     });
   } catch (error) {
@@ -60,12 +67,10 @@ const shutdown = async (signal) => {
 
 process.on("SIGTERM", () => shutdown("SIGTERM"));
 process.on("SIGINT", () => shutdown("SIGINT"));
-
 process.on("unhandledRejection", (reason) => {
   console.error("Unhandled Rejection:", reason);
   shutdown("unhandledRejection");
 });
-
 process.on("uncaughtException", (error) => {
   console.error("Uncaught Exception:", error);
   shutdown("uncaughtException");
